@@ -4,6 +4,7 @@ import Sunrise from './Icons/Sunrise'
 import Sunset from './Icons/Sunset'
 import { getHumidityValue, getPop, getSunTime, getVisibilityValue, getWindDirection } from '../helpers'
 import Tile from './Tile'
+import { FaArrowLeft } from "react-icons/fa";
 
 type Props = {
   data: forecastType
@@ -20,7 +21,8 @@ export const Forecast = ({ data }: Props): JSX.Element => {
   const today = data.list[0]
 
   return (
-    <div className="w-full md:max-w-[500px] py-4 md:py-4 md:px-10 lg:px-24 h-full lg:h-auto bg-white bg-opacity-20 backdrop-blur-ls rounded drop-shadow-lg">
+    <div className="relative w-full md:max-w-[500px] py-4 md:py-4 md:px-10 lg:px-24 h-full lg:h-auto bg-white bg-opacity-20 backdrop-blur-ls rounded drop-shadow-lg">
+      <div onClick={() => window.location.reload()} className='absolute top-0 left-0 cursor-pointer p-2'><FaArrowLeft /></div>
       <div className="mx-auto w-[300px]">
         <section className="text-center">
           <h2 className="text-2xl font-black">
@@ -76,8 +78,8 @@ export const Forecast = ({ data }: Props): JSX.Element => {
             title="Feels like"
             info={<Degree temp={Math.round(today.main.feels_like)} />}
             description={`Feels ${Math.round(today.main.feels_like) < Math.round(today.main.temp)
-                ? 'colder'
-                : 'warmer'
+              ? 'colder'
+              : 'warmer'
               }`}
           />
           <Tile
