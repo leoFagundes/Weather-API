@@ -9,7 +9,7 @@ export default function useForescast() {
 
   const getSearchOptions = (value: string) => {
     fetch(
-      ` http://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=${'dba141de978b142656e63bedeac9446b'}`
+      ` https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=${'dba141de978b142656e63bedeac9446b'}`
     )
       .then((res) => res.json())
       .then((data) => setOptions(data))
