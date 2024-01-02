@@ -9,7 +9,7 @@ export default function useForescast() {
 
   const getSearchOptions = (value: string) => {
     fetch(
-      ` http://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=${process.env.REACT_APP_API_KEY}`
+      ` http://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=${'dba141de978b142656e63bedeac9446b'}`
     )
       .then((res) => res.json())
       .then((data) => setOptions(data))
@@ -27,7 +27,9 @@ export default function useForescast() {
 
   const getForecast = (city: optionType) => {
     fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${process.env.REACT_APP_API_KEY}`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${
+        city.lon
+      }&units=metric&appid=${'dba141de978b142656e63bedeac9446b'}`
     )
       .then((res) => res.json())
       .then((data) => {
