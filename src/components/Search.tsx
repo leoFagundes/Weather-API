@@ -25,7 +25,7 @@ const Search = ({ term, options, onInputChange, onOptionSelect, onSubmit }: Prop
                         return (
                             <li key={option.name + '-' + index}>
                                 <button onClick={() => onOptionSelect(option)} className="text-left- text-sm w-full hover:bg-zinc-700 hover:text-white px-2 py-1 cursor-pointer">
-                                    {`${option.country ? option.country : ''} - ${option.name ? option.name : ''} - ${option.state ? option.state : ''}`}
+                                    {`${option.country ? option.country : ''} ${option.name ? '- ' + option.name : ''} ${option.state ? '-' + option.state : ''}`}
                                 </button>
                             </li>
                         )

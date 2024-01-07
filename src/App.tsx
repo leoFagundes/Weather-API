@@ -1,11 +1,12 @@
 import { Forecast } from "./components/Forecast"
+import { RecentSearches } from "./components/RecentSearches"
 import Search from "./components/Search"
 import useForescast from "./hooks/useForescast"
 
 const App = (): JSX.Element => {
 
   const {
-    term, options, forecast, onInputChange, onOptionSelect, onSubmit
+    term, options, forecast, onInputChange, onOptionSelect, onSubmit, removeSearch, getForecast, recentSearches
   } = useForescast()
 
   return (
@@ -13,15 +14,24 @@ const App = (): JSX.Element => {
       {forecast ? (
         <Forecast data={forecast} />
       ) : (
-        <Search
-          term={term}
-          options={options}
-          onInputChange={onInputChange}
-          onOptionSelect={onOptionSelect}
-          onSubmit={onSubmit}
-        />
-      )}
+        <>
+          <Search
+            term={term}
+            options={options}
+            onInputChange={onInputChange}
+            onOptionSelect={onOptionSelect}
+            onSubmit={onSubmit}
+          />
+          {recentSearches.length > 0 ? (
+            <RecentSearches
+              recentSearches={recentSearches}
+              removeSearch={removeSearch}
+              getForecast={getForecast}
+            />
+          ) : ''}
 
+        </>
+      )}
     </main>
   )
 }

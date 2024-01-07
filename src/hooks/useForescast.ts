@@ -7,6 +7,33 @@ export default function useForescast() {
   const [options, setOptions] = useState<[]>([])
   const [forecast, setForecast] = useState<forecastType | null>(null)
 
+  const [recentSearches, setRecentSearchs] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const savedRecentSearchs = localStorage.getItem('recentSearches')
+      return savedRecentSearchs ? JSON.parse(savedRecentSearchs) : []
+    }
+    return []
+  })
+
+  const removeSearch = (index: number) => {
+    // Crie uma cópia do array recentSearchs
+    const updatedSearches = [...recentSearches]
+
+    // Remova o item pelo índice
+    updatedSearches.splice(index, 1)
+
+    // Atualize o estado recentSearchs e o localStorage
+    setRecentSearchs(updatedSearches)
+    localStorage.setItem('recentSearches', JSON.stringify(updatedSearches))
+  }
+
+  useEffect(() => {
+    if (recentSearches.length > 0) {
+      // Atualiza o localStorage com a lista atualizada
+      localStorage.setItem('recentSearches', JSON.stringify(recentSearches))
+    }
+  }, [recentSearches])
+
   const getSearchOptions = (value: string) => {
     fetch(
       ` https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=5&appid=${process.env.REACT_APP_API_KEY}`
@@ -43,6 +70,13 @@ export default function useForescast() {
   const onSubmit = () => {
     if (!city) return
 
+    // Atualiza o estado recentSearchs antes de salvar no localStorage
+    const updatedSearches = [...recentSearches, city]
+    setRecentSearchs(updatedSearches)
+
+    // Atualiza o localStorage com a lista atualizada
+    localStorage.setItem('recentSearches', JSON.stringify(recentSearches))
+
     getForecast(city)
   }
 
@@ -64,5 +98,8 @@ export default function useForescast() {
     onInputChange,
     onOptionSelect,
     onSubmit,
+    removeSearch,
+    getForecast,
+    recentSearches,
   }
 }
